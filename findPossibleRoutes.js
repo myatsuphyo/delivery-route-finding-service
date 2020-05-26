@@ -5,15 +5,16 @@ var routes = [
 function findPossibleRoutes(inputRoute) {
     inputRoute = inputRoute.split("");
     var cost = 0;
-    inputRoute.forEach((stop, index) => {
-        var searchingRoute = stop + inputRoute[index + 1];
-        routes.forEach((route) => {
-            if (route.includes(searchingRoute)) {
-                route = route.replace(searchingRoute, '00');
-                cost += parseInt(route);
+    for (i = 0; i < inputRoute.length - 1; i++) {
+        var searchingRoute = inputRoute[i] + inputRoute[i + 1];
+        for (j = 0; j < routes.length; j++) {
+            if (routes[j].includes(searchingRoute)) {
+                routes[j] = routes[j].replace(searchingRoute, '00');
+                cost += parseInt(routes[j]);
+                break;
             }
-        })
-    })
+        }
+    }
     console.log(cost);
     return cost;
 }
