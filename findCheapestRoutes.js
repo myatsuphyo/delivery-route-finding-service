@@ -2,18 +2,35 @@ var routes = [
     'AB1', 'AC4', 'AD10', 'BE3', 'CD4', 'CF2', 'DE1', 'EB3', 'EA2', 'FD1'
 ];
 
-const problem = {
-    start: {},
-    A: { B: 1, C: 4, D: 10 },
-    B: { finish: 3 },
-    C: { D: 4, F: 2 },
-    D: { finish: 1 },
-    E: { B: 3, A: 2 },
-    F: { D: 1 },
-    finish: {}
-};
+var problem = {};
+findCheapestRoutes('E', 'E');
 
-// 
+function findCheapestRoutes(startPoint, finishPoint) {
+
+    routes.forEach((route) => {
+        var find = route[0];
+        var stop = parseInt(route.slice(2, route.length));
+        if (problem[find] === undefined) {
+            problem[find] = {}; 
+            if (route[1] == finishPoint) {
+                problem[find]['finish'] = stop;
+            } else {
+                problem[find][route[1]] = stop;
+            }
+        } else {
+            if (route[1] == finishPoint) {
+                problem[find]['finish'] = stop;
+            } else {
+                problem[find][route[1]] = stop;
+            }
+        }
+    });
+
+    problem['start'] = {};
+    problem['start'][startPoint] = 0;
+    problem['finish'] = {};
+}
+
 const lowestCostNode = (costs, processed) => {
     return Object.keys(costs).reduce((lowest, node) => {
         if (lowest === null || costs[node] < costs[lowest]) {
@@ -28,6 +45,7 @@ const lowestCostNode = (costs, processed) => {
 // function that returns the minimum cost and path to reach Finish
 const dijkstra = (graph) => {
 
+    problem['finish'] = {};
     // track lowest cost to reach each node
     const costs = Object.assign({ finish: Infinity }, graph.start);
 
@@ -60,7 +78,7 @@ const dijkstra = (graph) => {
         node = lowestCostNode(costs, processed);
     }
 
-    let optimalPath = ['finish'];
+    let optimalPath = [];
     let parent = parents.finish;
     while (parent) {
         optimalPath.push(parent);
@@ -69,7 +87,7 @@ const dijkstra = (graph) => {
     optimalPath.reverse();
 
     const results = {
-        distance: costs.finish,
+        cost: costs.finish,
         path: optimalPath
     };
 
