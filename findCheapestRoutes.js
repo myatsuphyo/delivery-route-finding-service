@@ -64,7 +64,7 @@ function dijkstra (graph) {
         cost: costs.finish,
         path: optimalPath
     };
-    console.log(results);
+    // console.log(results);
     return results;
 };
 

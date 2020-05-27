@@ -14,7 +14,7 @@ exports.findCostForGivenRoute = (req, res) => {
             }
         }
     }
-    res.json({cost: cost}).status(200);
+    res.json({ data: { route: req.params.givenRoute, cost: cost || 'No route found!' } }).status(200)
 }   
 
 exports.findCheapestRoutes = require('./../../findCheapestRoutes');
