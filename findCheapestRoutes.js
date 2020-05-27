@@ -3,12 +3,31 @@ var routes = [
 ];
 
 var problem = {};
+
+// var problem = {
+//     A: { B: 1, C: 4, finish: 10 },
+//     B: { E: 3 },
+//     C: { finish: 4, F: 2 },
+//     D: { E: 1 },
+//     start: { B: 3, A: 2 },
+//     F: { D: 1 },
+//     // start: { A: 0 },
+//     finish: {}
+// };
+
+// findCheapestRoutes('E', 'E');
+// findCheapestRoutes('E', 'D');
 findCheapestRoutes('E', 'E');
 
 function findCheapestRoutes(startPoint, finishPoint) {
-
     routes.forEach((route) => {
-        var find = route[0];
+        
+        if (route[0] === startPoint) {
+            var find = 'start';
+        } else {
+            var find = route[0];
+        }
+
         var stop = parseInt(route.slice(2, route.length));
         if (problem[find] === undefined) {
             problem[find] = {}; 
@@ -26,8 +45,6 @@ function findCheapestRoutes(startPoint, finishPoint) {
         }
     });
 
-    problem['start'] = {};
-    problem['start'][startPoint] = 0;
     problem['finish'] = {};
 }
 
@@ -45,10 +62,9 @@ const lowestCostNode = (costs, processed) => {
 // function that returns the minimum cost and path to reach Finish
 const dijkstra = (graph) => {
 
-    problem['finish'] = {};
     // track lowest cost to reach each node
     const costs = Object.assign({ finish: Infinity }, graph.start);
-
+    
     // track paths
     const parents = { finish: null };
     for (let child in graph.start) {
@@ -74,8 +90,10 @@ const dijkstra = (graph) => {
                 parents[n] = node;
             }
         }
+
         processed.push(node);
         node = lowestCostNode(costs, processed);
+        // console.log(processed);
     }
 
     let optimalPath = [];
@@ -85,12 +103,10 @@ const dijkstra = (graph) => {
         parent = parents[parent];
     }
     optimalPath.reverse();
-
     const results = {
         cost: costs.finish,
         path: optimalPath
     };
-
     return results;
 };
 
