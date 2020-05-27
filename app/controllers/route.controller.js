@@ -1,10 +1,7 @@
-const Route = require('../models/route.model');
+// const Route = require('../models/route.model');
+var routes = require('../models/route.default');
 
 exports.findCostForGivenRoute = (req, res) => {
-    // temporarily setting up
-    var routes = [
-        'AB1', 'AC4', 'AD10', 'BE3', 'CD4', 'CF2', 'DE1', 'EB3', 'EA2', 'FD1'
-    ];
     var givenRoute = req.params.givenRoute.split("");
     var cost = 0;
     for (i = 0; i < givenRoute.length - 1; i++) {
