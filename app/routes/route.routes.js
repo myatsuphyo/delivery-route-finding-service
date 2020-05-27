@@ -4,6 +4,10 @@ module.exports = function (app) {
     app.get('/api/cost/:givenRoute', (req, res) => {
         routeController.findCostForGivenRoute(req, res);
     });
+
+    app.get('/api/cheapest/:start/:end', (req, res) => {
+        routeController.findCheapestRoutes(req, res);
+    });
     
     app.get("/", function (req, res) {
         res.send(

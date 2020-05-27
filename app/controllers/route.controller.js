@@ -18,4 +18,6 @@ exports.findCostForGivenRoute = (req, res) => {
         }
     }
     res.json({cost: cost}).status(200);
-}
+}   
+
+exports.findCheapestRoutes = require('./../../findCheapestRoutes');
