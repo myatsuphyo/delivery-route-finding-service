@@ -25,7 +25,12 @@ mongoose.connect(dbConfig.url)
         process.exit();
     });
 
-// require('./app/routes/route.routes.js')(app);
+// temporarily setting up routes in localStorage
+var routes = [
+    'AB1', 'AC4', 'AD10', 'BE3', 'CD4', 'CF2', 'DE1', 'EB3', 'EA2', 'FD1'
+];
+
+require('./app/routes/route.routes.js')(app);
 
 // Create a Server
 var server = app.listen(8080, function () {
