@@ -17,7 +17,7 @@ var problem = {};
 
 // findCheapestRoutes('E', 'E');
 // findCheapestRoutes('E', 'D');
-findCheapestRoutes('E', 'E');
+findCheapestRoutes('E', 'D');
 
 function findCheapestRoutes(startPoint, finishPoint) {
     routes.forEach((route) => {
@@ -44,8 +44,7 @@ function findCheapestRoutes(startPoint, finishPoint) {
             }
         }
     });
-
-    problem['finish'] = {};
+    console.log(problem);
 }
 
 const lowestCostNode = (costs, processed) => {
