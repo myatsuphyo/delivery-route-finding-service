@@ -11,21 +11,21 @@ Currently, the following routes are used as default routes to use the service.
 $ git clone git@github.com:myatsuphyo/delivery-route-finding-service.git
 $ cd delivery-route-finding-service
 $ npm install
-$ npm start
+$ npm run start
 ```
 To use as a HTTP server: 
 The app will be running at port 8080 and you can access it from http://localhost:8080
 
-To use as a console app: 
+To use as a console app, please run this command.
 ```sh
-    node main.js
+    npm run console
 ```
 
 ### Features
 
-- Case 1 : finding cost of given route
-- Case 2 : finding possible routes by given conditions
-- Case 3 : finding cost of cheapest route
+- Case 1 : finding cost of given route (by simple includes() search)
+- Case 2 : finding possible routes by given conditions (unfinished currently solving)
+- Case 3 : finding cost of cheapest route (by Dijkstra's algorithm)
 
 ### Testing
 

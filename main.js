@@ -39,5 +39,4 @@ var server = app.listen(8080, function () {
     var port = server.address().port
 })
 
-require('./command')(app);
 module.exports = app;

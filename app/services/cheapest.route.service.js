@@ -2,7 +2,7 @@ var routes = require('../models/route.default');
 
 var graph = {};
 
-function lowestCostNode (costs, processed) {
+function lowestCostNode(costs, processed) {
     return Object.keys(costs).reduce((lowest, node) => {
         if (lowest === null || costs[node] < costs[lowest]) {
             if (!processed.includes(node)) {
@@ -22,7 +22,6 @@ function dijkstra (graph) {
     const parents = { finish: null };
     for (let child in graph.start) {
         parents[child] = 'start';
-        console.log(parents[child]);
     }
 
     // track nodes that have already been processed
@@ -90,6 +89,6 @@ exports.find = (startPoint, finishPoint) => {
         }
     });
 
-    var result = recursive(graph);
+    var result = dijkstra(graph);
     return result;
 }
