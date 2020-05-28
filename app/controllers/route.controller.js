@@ -25,7 +25,7 @@ exports.findCostForGivenRoute = (req, res) => {
         }
     }
 
-    if (notFoundRoute.length !== 0) {
+    if (notFoundRoute.length === 0) {
         cost = 0;
     }
 
