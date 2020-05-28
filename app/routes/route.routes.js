@@ -5,13 +5,13 @@ module.exports = function (app) {
         routeController.findCostForGivenRoute(req, res);
     });
 
-    app.get('/api/cheapest/:start/:end', (req, res) => {
+    app.get('/api/cost/cost/cheapest/:start/:end', (req, res) => {
         routeController.findCheapestRoute(req, res);
     });
     
     app.get("/", function (req, res) {
         res.send(
-            "Working"
+            "Server Running"
         );
     });
 };
