@@ -1,34 +1,34 @@
-var routes = require('../models/route.default');
+// var routes = require('../models/route.default');
 
 var graph = {};
 
-function lowestCostNode (costs, processed) {
+const routes = [
+    'AB1', 'AC4', 'AD10', 'BE3', 'CD4', 'CF2', 'DE1', 'EB3', 'EA2', 'FD1'
+];
+
+function lowestCostNode(costs, visited) {
     return Object.keys(costs).reduce((lowest, node) => {
         if (lowest === null || costs[node] < costs[lowest]) {
-            if (!processed.includes(node)) {
+            if (!visited.includes(node)) {
                 lowest = node;
             }
-    }
+        }
         return lowest;
     }, null);
 };
 
-function recursive (graph) {
-
-    // track lowest cost to reach each node
+function recursive(graph) {
+    // lowest cost for each node in the graph
     const costs = Object.assign({ finish: Infinity }, graph.start);
     
-    // track paths
+    // track paths { visiting_node: from_this_node}
     const parents = { finish: null };
     for (let child in graph.start) {
         parents[child] = 'start';
-        console.log(parents[child]);
     }
-
-    // track nodes that have already been processed
-    const processed = [];
-
-    let node = lowestCostNode(costs, processed);
+    // track nodes that have already been visited
+    const visited = [];
+    let node = lowestCostNode(costs, visited);
 
     while (node) {
         let cost = costs[node];
@@ -45,9 +45,8 @@ function recursive (graph) {
             }
         }
 
-        processed.push(node);
-        node = lowestCostNode(costs, processed);
-        // console.log(processed);
+        visited.push(node);
+        node = lowestCostNode(costs, visited);
     }
 
     let optimalPath = [];
@@ -61,10 +60,11 @@ function recursive (graph) {
         cost: costs.finish,
         // route: optimalPath
     };
+    console.log(results);
     return results;
 };
 
-exports.find = (startPoint, finishPoint) => {
+function find (startPoint, finishPoint){
     graph = {};
     routes.forEach((route) => {
         if (route[0] === startPoint) {
@@ -93,3 +93,5 @@ exports.find = (startPoint, finishPoint) => {
     var result = recursive(graph);
     return result;
 }
+
+find('E', 'E');
