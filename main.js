@@ -10,20 +10,20 @@ const corsOptions = {
 }
 app.use(cors(corsOptions))
 
-// Configuring the database
-const dbConfig = require('./app/config/mongodb.config.js');
-const mongoose = require('mongoose');
+// // Configuring the database
+// const dbConfig = require('./app/config/mongodb.config.js');
+// const mongoose = require('mongoose');
 
-mongoose.Promise = global.Promise;
+// mongoose.Promise = global.Promise;
 
-// Connecting to the database
-mongoose.connect(dbConfig.url)
-    .then(() => {
-        console.log("Successfully connected to MongoDB.");
-    }).catch(err => {
-        console.log('Could not connect to MongoDB.');
-        process.exit();
-    });
+// // Connecting to the database
+// mongoose.connect(dbConfig.url)
+//     .then(() => {
+//         console.log("Successfully connected to MongoDB.");
+//     }).catch(err => {
+//         console.log('Could not connect to MongoDB.');
+//         process.exit();
+//     });
 
 // temporarily setting up routes in localStorage
 var routes = [
@@ -37,8 +37,7 @@ var server = app.listen(8080, function () {
 
     var host = server.address().address
     var port = server.address().port
-
-    console.log("App listening at http://%s:%s", host, port)
 })
 
+require('./command')(app);
 module.exports = app;
