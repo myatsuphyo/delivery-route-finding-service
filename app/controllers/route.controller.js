@@ -22,7 +22,7 @@ exports.findCostForGivenRoute = (req, res) => {
     }
 }   
 
-const findCheapestRoutesService = require('../services/cost/cheapest.route.service')
+const findCheapestRoutesService = require('../services/cheapest.route.service');
 exports.findCheapestRoute = (req, res) => {
     try {
         let cheapestRoute = findCheapestRoutesService.find(req.params.start, req.params.end);

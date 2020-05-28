@@ -14,12 +14,13 @@ function lowestCostNode (costs, processed) {
 };
 
 // find the cheapest route using Dikjstra's algorithm
-function dijkstra (graph) {
+function recursive (graph) {
     const costs = Object.assign({ finish: Infinity }, graph.start);
     
     const parents = { finish: null };
     for (let child in graph.start) {
         parents[child] = 'start';
+        console.log(parents[child]);
     }
 
     const processed = [];
@@ -85,6 +86,6 @@ exports.find = (startPoint, finishPoint) => {
         }
     });
 
-    var result = dijkstra(graph);
+    var result = recursive(graph);
     return result;
 }
