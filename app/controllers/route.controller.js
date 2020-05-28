@@ -26,11 +26,7 @@ const findCheapestRoutesService = require('../services/cheapest.route.service')
 exports.findCheapestRoute = (req, res) => {
     try {
         let cheapestRoute = findCheapestRoutesService.find(req.params.start, req.params.end);
-        if (res !== '') {
-            res.json({ data: cheapestRoute }).status(200);
-        } else {
-            return cheapestRoute.cost;
-        }
+        res.json({ data: cheapestRoute }).status(200)
     } catch (error) {
         res.json({ error: { code: 500, message: error.message } }).status(200);
     }

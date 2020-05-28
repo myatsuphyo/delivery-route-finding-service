@@ -8,12 +8,12 @@ function lowestCostNode (costs, processed) {
             if (!processed.includes(node)) {
                 lowest = node;
             }
-    }
+        }
         return lowest;
     }, null);
 };
 
-function recursive (graph) {
+function dijkstra (graph) {
 
     // track lowest cost to reach each node
     const costs = Object.assign({ finish: Infinity }, graph.start);
