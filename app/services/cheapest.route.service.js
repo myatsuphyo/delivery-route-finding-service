@@ -1,6 +1,6 @@
-var routes = require('');
+var routes = require('../models/route.default');
 
-var problem = {};
+var graph = {};
 
 function lowestCostNode (costs, processed) {
     return Object.keys(costs).reduce((lowest, node) => {
@@ -58,15 +58,14 @@ function dijkstra (graph) {
     optimalPath.reverse();
     const results = {
         cost: costs.finish,
-        path: optimalPath
+        // route: optimalPath
     };
-    // console.log(results);
     return results;
 };
 
 exports.find = (startPoint, finishPoint) => {
+    graph = {};
     routes.forEach((route) => {
-
         if (route[0] === startPoint) {
             var find = 'start';
         } else {
@@ -74,21 +73,22 @@ exports.find = (startPoint, finishPoint) => {
         }
 
         var stop = parseInt(route.slice(2, route.length));
-        if (problem[find] === undefined) {
-            problem[find] = {};
+        if (graph[find] === undefined) {
+            graph[find] = {};
             if (route[1] == finishPoint) {
-                problem[find]['finish'] = stop;
+                graph[find]['finish'] = stop;
             } else {
-                problem[find][route[1]] = stop;
+                graph[find][route[1]] = stop;
             }
         } else {
             if (route[1] == finishPoint) {
-                problem[find]['finish'] = stop;
+                graph[find]['finish'] = stop;
             } else {
-                problem[find][route[1]] = stop;
+                graph[find][route[1]] = stop;
             }
         }
     });
-    dijkstra(problem);
+
+    var result = dijkstra(graph);
+    return result;
 }
-// console.log(dijkstra(problem));

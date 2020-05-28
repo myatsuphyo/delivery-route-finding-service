@@ -6,7 +6,7 @@ module.exports = function (app) {
     });
 
     app.get('/api/cheapest/:start/:end', (req, res) => {
-        routeController.findCheapestRoutes(req, res);
+        routeController.findCheapestRoute(req, res);
     });
     
     app.get("/", function (req, res) {

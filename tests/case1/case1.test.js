@@ -1,10 +1,8 @@
 const assert = require('assert');
 const request = require('supertest');
-const app = require('../main')
+const app = require('../../main')
 
-describe('Unit testing the eko route', () => {
-
-    // start of tests for finding costs for given route
+describe('Unit testing', () => {
     it('cost of ABE = 4', async () => {
         return request(app)
             .get('/api/cost/ABE')
@@ -31,6 +29,4 @@ describe('Unit testing the eko route', () => {
                 assert.deepEqual(res.body.data, { route: "EACF", cost: 8 })
             })
     });
-
-    // end of tests for finding costs for given route
 });
