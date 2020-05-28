@@ -9,7 +9,7 @@ A->B, A->C, A->D, B->E, C->D, C->F, D->E, E->B, E->A, F->D
 ### Installation
 
 ```sh
-$ git clone git@github.com:zaw-hlaing-bwar/eko-route.git
+$ git clone git@github.com:myatsuphyo/delivery-route-finding-service.git
 $ cd delivery-route-finding-service
 $ npm install
 $ npm start
