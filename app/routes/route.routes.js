@@ -5,11 +5,7 @@ module.exports = function (app) {
         routeController.findCostForGivenRoute(req, res);
     });
 
-<<<<<<< HEAD
-    app.get('/api/cost/cheapest/:start/:end', (req, res) => {
-=======
     app.get('/api/cheapest/:start/:end', (req, res) => {
->>>>>>> parent of f094bb2... Clean before adding frontend
         routeController.findCheapestRoute(req, res);
     });
     

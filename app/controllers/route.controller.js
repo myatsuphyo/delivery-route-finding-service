@@ -18,11 +18,7 @@ exports.findCostForGivenRoute = (req, res) => {
     res.json({ data: { route: req.params.givenRoute, cost: cost} }).status(200)
 }   
 
-<<<<<<< HEAD
-const findCheapestRoutesService = require('../services/cheapest.route.service');
-=======
 const findCheapestRoutesService = require('../services/cheapest.route.service')
->>>>>>> parent of f094bb2... Clean before adding frontend
 exports.findCheapestRoute = (req, res) => {
     try {
         let cheapestRoute = findCheapestRoutesService.find(req.params.start, req.params.end);

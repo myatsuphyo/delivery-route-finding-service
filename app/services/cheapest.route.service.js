@@ -13,14 +13,8 @@ function lowestCostNode (costs, processed) {
     }, null);
 };
 
-<<<<<<< HEAD
 // find the cheapest route using Dikjstra's algorithm
-function recursive (graph) {
-=======
 function dijkstra (graph) {
-
-    // track lowest cost to reach each node
->>>>>>> parent of f094bb2... Clean before adding frontend
     const costs = Object.assign({ finish: Infinity }, graph.start);
     
     // track paths
