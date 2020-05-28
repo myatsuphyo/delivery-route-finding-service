@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node main.js",
     "test-case1": "mocha ./tests/case1/",
-    "test-case2": "mocha ./tests/case2/"
+    "test-case2": "mocha ./tests/case2/",
+    "test-case3": "mocha ./tests/case3/"
   },
   "repository": {
     "type": "git",
