@@ -2,10 +2,9 @@
 
 The purpose of this source code is to build the system that provide finding routes service.
 
-Currently, the following routes are used as default routes to use the service.
+Currently, the following routes are used as default routes to use the service. \n
 A->B, A->C, A->D, B->E, C->D, C->F, D->E, E->B, E->A, F->D
 
-## Getting start!
 ### Installation
 
 ```sh
@@ -26,7 +25,7 @@ To use as a console app:
 
 - Case 1 : finding cost of given route
 - Case 2 : finding possible routes by given conditions
-- Cheapest finding cost of cheapest route
+- Case 3 : finding cost of cheapest route
 
 ### Testing
 
