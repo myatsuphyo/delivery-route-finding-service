@@ -13,8 +13,9 @@ function lowestCostNode (costs, processed) {
     }, null);
 };
 
-// find the cheapest route using Dikjstra's algorithm
 function dijkstra (graph) {
+
+    // track lowest cost to reach each node
     const costs = Object.assign({ finish: Infinity }, graph.start);
     
     // track paths
