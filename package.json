@@ -4,7 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "dev": "node main.js",
+    "api": "node main.js",
     "console": "node console.js",
     "test-case1": "mocha ./tests/case1/",
     "test-case2": "mocha ./tests/case2/",

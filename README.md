@@ -11,14 +11,24 @@ Currently, the following routes are used as default routes to use the service.
 $ git clone git@github.com:myatsuphyo/delivery-route-finding-service.git
 $ cd delivery-route-finding-service
 $ npm install
-$ npm run start
 ```
-To use as a HTTP server: 
-The app will be running at port 8080 and you can access it from http://localhost:8080
-
 To use as a console app, please run this command.
 ```sh
     npm run console
+```
+
+To use as a HTTP server: 
+```sh
+    npm run api
+```
+The app will be running at port 8080 and you can access it from http://localhost:8080
+
+Example HTTP routes to test API:
+```sh
+    http://localhost:8080/api/cost/AD
+    http://localhost:8080/api/cost/EAD
+    http://localhost:8080/api/cheapest/E/E
+    http://localhost:8080/api/cheapest/E/D
 ```
 
 ### Features
