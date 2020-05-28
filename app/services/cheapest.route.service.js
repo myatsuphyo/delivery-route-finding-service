@@ -1,4 +1,4 @@
-var defaultRoutes = require('../models/route.default');
+var routes = require('../models/route.default');
 
 var graph = {};
 
@@ -13,16 +13,24 @@ function lowestCostNode (costs, processed) {
     }, null);
 };
 
+<<<<<<< HEAD
 // find the cheapest route using Dikjstra's algorithm
 function recursive (graph) {
+=======
+function dijkstra (graph) {
+
+    // track lowest cost to reach each node
+>>>>>>> parent of f094bb2... Clean before adding frontend
     const costs = Object.assign({ finish: Infinity }, graph.start);
     
+    // track paths
     const parents = { finish: null };
     for (let child in graph.start) {
         parents[child] = 'start';
         console.log(parents[child]);
     }
 
+    // track nodes that have already been processed
     const processed = [];
 
     let node = lowestCostNode(costs, processed);
@@ -44,6 +52,7 @@ function recursive (graph) {
 
         processed.push(node);
         node = lowestCostNode(costs, processed);
+        // console.log(processed);
     }
 
     let optimalPath = [];
@@ -62,7 +71,7 @@ function recursive (graph) {
 
 exports.find = (startPoint, finishPoint) => {
     graph = {};
-    defaultRoutes.forEach((route) => {
+    routes.forEach((route) => {
         if (route[0] === startPoint) {
             var find = 'start';
         } else {
