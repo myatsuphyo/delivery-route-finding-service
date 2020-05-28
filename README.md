@@ -12,6 +12,8 @@ $ git clone git@github.com:myatsuphyo/delivery-route-finding-service.git
 $ cd delivery-route-finding-service
 $ npm install
 ```
+### Getting started
+
 To use as a console app, please run this command.
 ```sh
     npm run console
