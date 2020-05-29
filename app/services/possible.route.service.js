@@ -1,93 +1,119 @@
-var routes = require('../models/route.default');
+const routes = require('../models/route.default');
 
-var graph = {};
+graph = {};
 
-function lowestCostNode(costs, processed) {
-    return Object.keys(costs).reduce((lowest, node) => {
-        if (lowest === null || costs[node] < costs[lowest]) {
-            if (!processed.includes(node)) {
-                lowest = node;
-            }
-        }
-        return lowest;
-    }, null);
-};
+function findCost(path) {
+    let deliveryCost = 0;
+    const pathArray = [...path];
 
-function dfs(graph) {
+    for (let index = 1; index < pathArray.length; index++) {
+        const startPoint = pathArray[index - 1];
+        const endPoint = pathArray[index];
 
-    // track lowest cost to reach each node
-    const costs = Object.assign({ finish: Infinity }, graph.start);
-
-    // track paths
-    const parents = { finish: null };
-    for (let child in graph.start) {
-        parents[child] = 'start';
-    }
-
-    // track nodes that have already been processed
-    const processed = [];
-
-    let node = lowestCostNode(costs, processed);
-
-    while (node) {
-        let cost = costs[node];
-        let children = graph[node];
-        for (let n in children) {
-            let newCost = cost + children[n];
-            if (!costs[n]) {
-                costs[n] = newCost;
-                parents[n] = node;
-            }
-            if (costs[n] > newCost) {
-                costs[n] = newCost;
-                parents[n] = node;
-            }
+        // stop if start node is notfound
+        if (!graph[startPoint]) {
+            return null;
         }
 
-        processed.push(node);
-        node = lowestCostNode(costs, processed);
-        // console.log(processed);
+        // stop if end node is notfound
+        const edge = graph[startPoint][endPoint];
+        if (!edge) {
+            return null;
+        }
+
+        deliveryCost += edge;
     }
 
-    let optimalPath = [];
-    let parent = parents.finish;
-    while (parent) {
-        optimalPath.push(parent);
-        parent = parents[parent];
-    }
-    optimalPath.reverse();
-    const results = {
-        cost: costs.finish,
-        // route: optimalPath
-    };
-    return results;
-};
+    return deliveryCost;
+}
 
-exports.find = (startPoint, finishPoint) => {
-    graph = {};
+function findPossibleNodes(startPoint, endPoint, stop, sameRouteCost) {
+    // rearrange a graph
     routes.forEach((route) => {
-        if (route[0] === startPoint) {
-            var find = 'start';
-        } else {
-            var find = route[0];
-        }
+        var find = route[0];
 
         var stop = parseInt(route.slice(2, route.length));
         if (graph[find] === undefined) {
             graph[find] = {};
-            if (route[1] == finishPoint) {
-                graph[find]['finish'] = stop;
-            } else {
-                graph[find][route[1]] = stop;
-            }
-        } else {
-            if (route[1] == finishPoint) {
-                graph[find]['finish'] = stop;
-            } else {
-                graph[find][route[1]] = stop;
-            }
         }
+
+        graph[find][route[1]] = stop;
     });
-    var result = dfs(graph);
-    return result;
+
+    const possibleDeliveryRoutes = recursive(startPoint, endPoint, stop, sameRouteCost);
+    return possibleDeliveryRoutes.map(possibleDeliveryRoute => ({
+        route: possibleDeliveryRoute,
+        cost: findCost(possibleDeliveryRoute, graph),
+    }));
+}
+
+function recursive(startPoint, endPoint, stop = null, sameRouteCost = null, visitedRoute = '', currentCost = 0) {
+    const nodesOfstartPoint = graph[startPoint];
+    let route = visitedRoute;
+
+    if (!route && !nodesOfstartPoint) {
+        return [];
+    }
+
+    if (sameRouteCost !== null && currentCost >= sameRouteCost) {
+        return '';
+    }
+
+    // found the end point
+    if (route && startPoint === endPoint) {
+        route += endPoint;
+
+        if (sameRouteCost !== null && currentCost < sameRouteCost && graph[endPoint]) {
+            const routeArray = Object.keys(graph[endPoint])
+                .map(node => {
+                    const edge = nodesOfstartPoint[node];
+
+                    if (edge === 0) {
+                        return '';
+                    }
+
+                    return recursive(node, endPoint, stop, sameRouteCost, route, currentCost + edge,
+                    );
+                })
+                .filter(route => route !== '');
+
+            return [route, ...routeArray];
+        }
+
+        return route;
+    }
+
+    const skipDuplicatedRoute = [...route].splice(-1) + startPoint;
+    if (sameRouteCost !== null && route.includes(skipDuplicatedRoute)) {
+        return '';
+    }
+
+    route += startPoint;
+
+    // stop if stop of route is more that limit stop
+    if (stop !== null && route.length > stop) {
+        return '';
+    }
+
+    const routeArray = Object.keys(nodesOfstartPoint)
+        .map(node => {
+            const edge = nodesOfstartPoint[node];
+
+            // stop if edge of node is 0
+            if (edge === 0) {
+                return '';
+            }
+
+            return recursive(
+                node,
+                endPoint,
+                stop,
+                sameRouteCost,
+                route,
+                currentCost + edge,
+            );
+        })
+        .filter(route => route !== '');
+
+    return [].concat.apply([], routeArray);
 }
