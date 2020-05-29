@@ -36,7 +36,7 @@ Example HTTP routes to test API:
 ### Features
 
 - Case 1 : finding cost of given route (by simple includes() search)
-- Case 2 : finding possible routes by given conditions (unfinished currently solving)
+- Case 2 : finding possible routes by given conditions (unfinished currently solving, by DFS algorithm)
 - Case 3 : finding cost of cheapest route (by Dijkstra's algorithm)
 
 ### Testing

@@ -57,3 +57,19 @@ exports.findCheapestRoute = (req, res) => {
         res.json({ error: { code: 500, message: error.message } }).status(200);
     }
 }
+
+/**
+* GET route /api/cost/possible/:start/:end/.
+* Method - GET
+* params - start(String), end(String)
+* response - response - json { cost: (int)}
+**/
+const findPossibleRoutesService = require('../services/possible.route.service')
+exports.findPossibleRoutes = (req, res) => {
+    try {
+        let cheapestRoute = findPossibleRoutesService.find(req.params.start, req.params.end);
+        console.log(cheapestRoute);
+    } catch (error) {
+        res.json({ error: { code: 500, message: error.message } }).status(200);
+    }
+}

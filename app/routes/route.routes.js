@@ -8,6 +8,10 @@ module.exports = function (app) {
     app.get('/api/cheapest/:start/:end', (req, res) => {
         routeController.findCheapestRoute(req, res);
     });
+
+    app.get('/api/possible/:start/:end', (req, res) => {
+        routeController.findPossibleRoutes(req, res);
+    });
     
     app.get("/", function (req, res) {
         res.send(
