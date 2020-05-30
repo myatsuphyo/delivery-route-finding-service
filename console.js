@@ -18,7 +18,7 @@ function chooseType() {
             console.clear();
             rl.question('Type a route to find its cost = ', (route) => {
                 let req = {};
-                req.params = { 'givenRoute': route };
+                req.params = { 'givenRoute': route.toUpperCase() };
                 var output = routeController.findCostForGivenRoute(req, '');
                 console.clear();
                 if (output == 0) {
@@ -26,6 +26,26 @@ function chooseType() {
                 } else {
                     console.log('The cost of route ' + route + ' = ' + output);
                 }
+            })
+        } else if (type == 2) {
+            console.clear();
+            rl.question('Type the start point = ', (start) => {
+                console.clear();
+                rl.question('Type the end point from start point ' + start + ' = ', (end) => {
+                    console.clear();
+                    console.log('Click ENTER to skip this step.')
+                    rl.question('Maximum number of stops from ' + start + ' to ' + end + ' = ', (stop) => {
+                        console.clear();
+                        console.log('Click ENTER to skip this step.')
+                        rl.question('Do you want to use the same route more than once (Type yes or no)' + ' = ', (sameRoute) => {
+                            let req = {};
+                            req.params = { 'start': start, 'end': end, 'stop': parseInt(stop), 'sameRoute': sameRoute };
+                            var output = routeController.findPossibleRoutes(req, '');
+                            // console.clear();
+                            console.log('The number of possible routes from ' + start + ' to ' + end + ' = ' + output);
+                        })
+                    })
+                })
             })
         } else if (type == 3) {
             console.clear();

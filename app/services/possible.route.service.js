@@ -27,7 +27,7 @@ function findCost(path) {
     return deliveryCost;
 }
 
-function findPossibleNodes(startPoint, endPoint, stop, sameRouteCost) {
+exports.find = (startPoint, endPoint, stop = null, sameRouteCost = null) => {
     // rearrange a graph
     routes.forEach((route) => {
         var find = route[0];
@@ -39,12 +39,13 @@ function findPossibleNodes(startPoint, endPoint, stop, sameRouteCost) {
 
         graph[find][route[1]] = stop;
     });
-
+    console.log()
     const possibleDeliveryRoutes = recursive(startPoint, endPoint, stop, sameRouteCost);
-    return possibleDeliveryRoutes.map(possibleDeliveryRoute => ({
+    var result =possibleDeliveryRoutes.map(possibleDeliveryRoute => ({
         route: possibleDeliveryRoute,
         cost: findCost(possibleDeliveryRoute, graph),
     }));
+    return result.length;
 }
 
 function recursive(startPoint, endPoint, stop = null, sameRouteCost = null, visitedRoute = '', currentCost = 0) {
