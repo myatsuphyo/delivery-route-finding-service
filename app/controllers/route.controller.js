@@ -18,7 +18,6 @@ exports.findCostForGivenRoute = (req, res) => {
                 newCost = routes[j].replace(searchingRoute, '00');
                 cost += parseInt(newCost);
                 found = true;
-                notFoundRoute = [];
                 break;
             } else {
                 notFoundRoute.push(searchingRoute);
@@ -26,7 +25,7 @@ exports.findCostForGivenRoute = (req, res) => {
         }
     }
 
-    if (notFoundRoute.length !== 0) {
+    if (notFoundRoute.length === 0) {
         cost = 0;
     }
 
@@ -68,14 +67,9 @@ exports.findCheapestRoute = (req, res) => {
 const findPossibleRoutesService = require('../services/possible.route.service')
 exports.findPossibleRoutes = (req, res) => {
     try {
-        let possibleRoutes = findPossibleRoutesService.find(req.params.start, req.params.end, req.params.stop, req.params.sameRoute);
-        if (res !== '') {
-            res.json({ data: possibleRoutes.length }).status(200);
-        } else {
-            // for console
-            return possibleRoutes;
-        }
+        let cheapestRoute = findPossibleRoutesService.find(req.params.start, req.params.end);
+        console.log(cheapestRoute);
     } catch (error) {
-        // res.json({ error: { code: 500, message: error.message } }).status(200);
+        res.json({ error: { code: 500, message: error.message } }).status(200);
     }
 }
