@@ -9,7 +9,15 @@ module.exports = function (app) {
         routeController.findCheapestRoute(req, res);
     });
 
-    app.get('/api/possible/:start/:end', (req, res) => {
+    app.get('/api/possible/:start/:end/', (req, res) => {
+        routeController.findPossibleRoutes(req, res);
+    });
+
+    app.get('/api/possible/:start/:end/:stop', (req, res) => {
+        routeController.findPossibleRoutes(req, res);
+    });
+
+    app.get('/api/possible/:start/:end/:stop/:sameRoute', (req, res) => {
         routeController.findPossibleRoutes(req, res);
     });
     

@@ -27,7 +27,9 @@ function findCost(path) {
     return deliveryCost;
 }
 
-function findPossibleNodes(startPoint, endPoint, stop, sameRouteCost) {
+exports.find = (startPoint, endPoint, stop = null, sameRouteCost = null) => {
+    stop = parseInt(stop);
+
     // rearrange a graph
     routes.forEach((route) => {
         var find = route[0];

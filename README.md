@@ -26,9 +26,18 @@ To use as a HTTP server:
 The app will be running at port 8080 and you can access it from http://localhost:8080
 
 Example HTTP routes to test API:
+Case 1:
 ```sh
     http://localhost:8080/api/cost/AD
     http://localhost:8080/api/cost/EAD
+```
+Case 2: 
+```sh
+    http://localhost:8080/api/possible/E/E
+    http://localhost:8080/api/cheapest/E/D/4
+```
+Case 3:
+```sh
     http://localhost:8080/api/cheapest/E/E
     http://localhost:8080/api/cheapest/E/D
 ```
@@ -36,7 +45,7 @@ Example HTTP routes to test API:
 ### Features
 
 - Case 1 : finding cost of given route (by simple includes() search)
-- Case 2 : finding possible routes by given conditions (unfinished currently solving, by DFS algorithm)
+- Case 2 : finding possible routes by given conditions (by DFS algorithm)
 - Case 3 : finding cost of cheapest route (by Dijkstra's algorithm)
 
 ### Testing

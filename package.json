@@ -4,8 +4,9 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "api": "node main.js",
+    "serve": "node main.js",
     "console": "node console.js",
+    "test": "node test.js",
     "test-case1": "mocha ./tests/case1/",
     "test-case2": "mocha ./tests/case2/",
     "test-case3": "mocha ./tests/case3/"

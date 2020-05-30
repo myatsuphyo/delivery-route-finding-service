@@ -67,9 +67,15 @@ exports.findCheapestRoute = (req, res) => {
 const findPossibleRoutesService = require('../services/possible.route.service')
 exports.findPossibleRoutes = (req, res) => {
     try {
-        let cheapestRoute = findPossibleRoutesService.find(req.params.start, req.params.end);
-        console.log(cheapestRoute);
+        let possibleRoutes = findPossibleRoutesService.find(req.params.start, req.params.end, req.params.stop, req.params.sameRoute);
+        if (res !== '') {
+            res.json({ data: possibleRoutes.length }).status(200);
+        } else {
+            // for console
+            return possibleRoutes.length;
+        }
     } catch (error) {
+        console.log(error);
         res.json({ error: { code: 500, message: error.message } }).status(200);
     }
 }
