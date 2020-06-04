@@ -2,7 +2,7 @@ const assert = require('assert');
 const request = require('supertest');
 const app = require('../../main')
 
-describe('Unit testing', () => {
+describe('Testing', () => {
     it('The​ ​ cost​ ​ of​ ​ cheapest​ ​ delivery​ ​ route​ ​from​ ​ E ​ ​ to​ ​ D = 9', async () => {
         return request(app)
             .get('/api/cheapest/E/D')

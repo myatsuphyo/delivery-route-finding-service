@@ -1,6 +1,4 @@
-const routes = require('../models/route.default');
-
-graph = {};
+const routesGraph = require('../models/route.default');
 
 function findCost(path) {
     let deliveryCost = 0;
@@ -11,12 +9,12 @@ function findCost(path) {
         const endPoint = pathArray[index];
 
         // stop if start node is notfound
-        if (!graph[startPoint]) {
+        if (!routesGraph[startPoint]) {
             return null;
         }
 
         // stop if end node is notfound
-        const edge = graph[startPoint][endPoint];
+        const edge = routesGraph[startPoint][endPoint];
         if (!edge) {
             return null;
         }
@@ -30,27 +28,15 @@ function findCost(path) {
 exports.find = (startPoint, endPoint, stop = null, sameRouteCost = null) => {
     stop = parseInt(stop);
 
-    // rearrange a graph
-    routes.forEach((route) => {
-        var find = route[0];
-
-        var stop = parseInt(route.slice(2, route.length));
-        if (graph[find] === undefined) {
-            graph[find] = {};
-        }
-
-        graph[find][route[1]] = stop;
-    });
-
     const possibleDeliveryRoutes = recursive(startPoint, endPoint, stop, sameRouteCost);
     return possibleDeliveryRoutes.map(possibleDeliveryRoute => ({
         route: possibleDeliveryRoute,
-        cost: findCost(possibleDeliveryRoute, graph),
+        cost: findCost(possibleDeliveryRoute, routesGraph),
     }));
 }
 
 function recursive(startPoint, endPoint, stop = null, sameRouteCost = null, visitedRoute = '', currentCost = 0) {
-    const nodesOfstartPoint = graph[startPoint];
+    const nodesOfstartPoint = routesGraph[startPoint];
     let route = visitedRoute;
 
     if (!route && !nodesOfstartPoint) {
@@ -65,8 +51,8 @@ function recursive(startPoint, endPoint, stop = null, sameRouteCost = null, visi
     if (route && startPoint === endPoint) {
         route += endPoint;
 
-        if (sameRouteCost !== null && currentCost < sameRouteCost && graph[endPoint]) {
-            const routeArray = Object.keys(graph[endPoint])
+        if (sameRouteCost !== null && currentCost < sameRouteCost && routesGraph[endPoint]) {
+            const routeArray = Object.keys(routesGraph[endPoint])
                 .map(node => {
                     const edge = nodesOfstartPoint[node];
 

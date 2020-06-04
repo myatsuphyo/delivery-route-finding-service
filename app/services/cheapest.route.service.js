@@ -1,6 +1,14 @@
 var routes = require('../models/route.default');
 
-var graph = {};
+var graph = {
+    A: { B: 1, C: 4, D: 10 },
+    B: { E: 3 },
+    C: { D: 4, F: 2 },
+    D: { E: 1 },
+    E: { B: 3, A: 2 },
+    F: { D: 1 }
+};
+
 
 function lowestCostNode(costs, processed) {
     return Object.keys(costs).reduce((lowest, node) => {
@@ -13,15 +21,16 @@ function lowestCostNode(costs, processed) {
     }, null);
 };
 
-function dijkstra (graph) {
+function dijkstra (graph, startPoint, finishPoint) {
 
     // track lowest cost to reach each node
     const costs = Object.assign({ finish: Infinity }, graph.start);
     
     // track paths
-    const parents = { finish: null };
-    for (let child in graph.start) {
-        parents[child] = 'start';
+    const parents = { finishPoint: null };
+    console.log(parents);
+    for (let child in graph.startPoint) {
+        parents[child] = startPoint;
     }
 
     // track nodes that have already been processed
@@ -89,6 +98,6 @@ exports.find = (startPoint, finishPoint) => {
         }
     });
 
-    var result = dijkstra(graph);
+    var result = dijkstra(graph, startPoint, finishPoint);
     return result;
 }

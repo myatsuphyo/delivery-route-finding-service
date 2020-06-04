@@ -33,7 +33,7 @@ var routes = [
 require('./app/routes/route.routes.js')(app);
 
 // Create a Server
-var server = app.listen(8080, function () {
+var server = app.listen(8000, function () {
 
     var host = server.address().address
     var port = server.address().port
