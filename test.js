@@ -29,22 +29,26 @@ function lowestCostNode(costs, processed) {
 function dijkstra(graph, startPoint, finishPoint) {
 
     // track lowest cost to reach each node
-    const costs = Object.assign({ finish: Infinity }, graph.start);
-
+    // const costs = Object.assign({ finishPoint: Infinity }, graph.startPoint);
+    const costs = {};
+    costs[finishPoint] = Infinity;
+    
     // track paths
-    finishPoint = finishPoint.toString();
-    const parents = { D: null };
-    console.log(parents);
-    for (let child in graph.startPoint) {
+    const parents = {};
+    parents[finishPoint] = null;
+
+    for (let child in graph[startPoint]) {
         parents[child] = startPoint;
+        costs[child] = graph[startPoint][child];
     }
 
     // track nodes that have already been processed
     const processed = [];
 
     let node = lowestCostNode(costs, processed);
-
+    
     while (node) {
+        console.log(node);
         let cost = costs[node];
         let children = graph[node];
         for (let n in children) {
@@ -61,18 +65,18 @@ function dijkstra(graph, startPoint, finishPoint) {
 
         processed.push(node);
         node = lowestCostNode(costs, processed);
-        // console.log(processed);
     }
 
     let optimalPath = [];
-    let parent = parents.finish;
-    while (parent) {
+    let parent = parents[finishPoint];
+    while (parent && parent !== startPoint) {
         optimalPath.push(parent);
         parent = parents[parent];
     }
     optimalPath.reverse();
+    optimalPath = [startPoint, ...optimalPath, finishPoint];
     const results = {
-        cost: costs.finish,
+        cost: costs[finishPoint],
         // route: optimalPath
     };
     return results;

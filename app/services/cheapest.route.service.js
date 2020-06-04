@@ -1,14 +1,4 @@
-var routes = require('../models/route.default');
-
-var graph = {
-    A: { B: 1, C: 4, D: 10 },
-    B: { E: 3 },
-    C: { D: 4, F: 2 },
-    D: { E: 1 },
-    E: { B: 3, A: 2 },
-    F: { D: 1 }
-};
-
+var routesGraph = require('../models/route.default');
 
 function lowestCostNode(costs, processed) {
     return Object.keys(costs).reduce((lowest, node) => {
@@ -21,16 +11,20 @@ function lowestCostNode(costs, processed) {
     }, null);
 };
 
-function dijkstra (graph, startPoint, finishPoint) {
+function dijkstra(routesGraph, startPoint, finishPoint) {
 
     // track lowest cost to reach each node
-    const costs = Object.assign({ finish: Infinity }, graph.start);
-    
+    // const costs = Object.assign({ finishPoint: Infinity }, routesGraph.startPoint);
+    const costs = {};
+    costs[finishPoint] = Infinity;
+
     // track paths
-    const parents = { finishPoint: null };
-    console.log(parents);
-    for (let child in graph.startPoint) {
+    const parents = {};
+    parents[finishPoint] = null;
+
+    for (let child in routesGraph[startPoint]) {
         parents[child] = startPoint;
+        costs[child] = routesGraph[startPoint][child];
     }
 
     // track nodes that have already been processed
@@ -39,8 +33,9 @@ function dijkstra (graph, startPoint, finishPoint) {
     let node = lowestCostNode(costs, processed);
 
     while (node) {
+        console.log(node);
         let cost = costs[node];
-        let children = graph[node];
+        let children = routesGraph[node];
         for (let n in children) {
             let newCost = cost + children[n];
             if (!costs[n]) {
@@ -55,49 +50,28 @@ function dijkstra (graph, startPoint, finishPoint) {
 
         processed.push(node);
         node = lowestCostNode(costs, processed);
-        // console.log(processed);
     }
 
     let optimalPath = [];
-    let parent = parents.finish;
-    while (parent) {
+    let parent = parents[finishPoint];
+    while (parent && parent !== startPoint) {
         optimalPath.push(parent);
         parent = parents[parent];
     }
     optimalPath.reverse();
+    optimalPath = [startPoint, ...optimalPath, finishPoint];
     const results = {
-        cost: costs.finish,
+        cost: costs[finishPoint],
         // route: optimalPath
     };
     return results;
 };
 
-exports.find = (startPoint, finishPoint) => {
-    graph = {};
-    routes.forEach((route) => {
-        if (route[0] === startPoint) {
-            var find = 'start';
-        } else {
-            var find = route[0];
-        }
-
-        var stop = parseInt(route.slice(2, route.length));
-        if (graph[find] === undefined) {
-            graph[find] = {};
-            if (route[1] == finishPoint) {
-                graph[find]['finish'] = stop;
-            } else {
-                graph[find][route[1]] = stop;
-            }
-        } else {
-            if (route[1] == finishPoint) {
-                graph[find]['finish'] = stop;
-            } else {
-                graph[find][route[1]] = stop;
-            }
-        }
-    });
-
-    var result = dijkstra(graph, startPoint, finishPoint);
+find(
+    'E',
+    'D'
+);
+function find(startPoint, finishPoint) {
+    var result = dijkstra(routesGraph, startPoint, finishPoint);
     return result;
 }
